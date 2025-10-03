@@ -7,10 +7,64 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<div class="w-full h-screen bg-zinc-900">
-    <div class="parent relative top-0 left-0 w-full h-[1000vh] bg-zinc-900">
-        <div class="w-full sticky top-0 left-0 w-full h-52 h-screen bg-zinc-400">
+<div class="w-full bg-zinc-900">
+    <div class="parent relative w-full h-[2000vh]">
+        <div class="w-full sticky top-0 left-0 h-screen overflow-x-hidden">
             <canvas class="w-full h-screen" id="frame"></canvas>
+            <div class="absolute animate-1 z-[2] text-white bottom-10 w-1/2 left-10">
+                <h1 class="leading-20 font-[100] text-3xl">
+                    &copy; 2024 DOZE STD
+                </h1>
+                <h1 class="text-3xl">
+                    SHAPING BRANDS → CRAFTING MOTION
+                </h1>
+            </div>
+            <div
+                class="absolute animate-2 flex align-center z-[2] text-white bottom-10 w-1/2 right-10 text-right opacity-0">
+                <h1 class="leading-20 font-[100] uppercase text-6xl">
+                    Transforming Visions
+                </h1>
+                <h1 class="text-xl w-1/2">
+                    Building indentitiy and inspiring action. Sculpting digital experiences resonate.</h1>
+            </div>
+            <div
+                class="absolute animate-3 z-[2] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-0">
+                <h1 class="leading-20 font-[100] uppercase text-6xl">
+                    Elevating Aesthetics
+                </h1>
+                <h1 class="text-xl">
+                    Crafting solution and exploring new horizons. Evolving narratives and evevating aesthetics in every
+                    project.
+                </h1>
+            </div>
+            <div class="w-1/3 panel translate-x-full h-screen bg-white absolute right-0 top-0 z-[2] p-10">
+                <h3 class="panelelem text-xl font-[100]">© 2024 Doze.Std</h3>
+                <p class="panelelem mt-10 text-xl">
+                    Sculpting Digital
+                    I
+                    Transforming visions into digital realities. Weaving stories that captivate and innovate.
+                    Exploring new possibilities with a focus on narrative evolution. Crafting solutions that engage and
+                    elevate.</p>
+                <button class="panelelem border-[1px] px-3 py-2 border-[#555] font-[100] mt-6">Get Reviews
+                    →</button>
+                <div class="panelelem absolute bottom-10">
+                    <h3 class="text-xl">Innovating Design</h3>
+                    <p class="text-sm mt-3">Connecting ideas to foster creativity. Designing impactful experiences
+                        that
+                        resonate.
+                        Feel free to mix and match these sections to suit your website's design needs!</p>
+                    <button class="bg-black text-white px-7 text-sm mt-4 py-4 font-[100] capitalize">experience</button>
+                </div>
+            </div>
+            <div
+                class="absolute z-[2] panelism text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-6xl tracking-lighter opacity-0">
+                &copy; Panelism
+                <span class="line w-10 h-1 bg-white inline-block"></span>
+                2048
+            </div>
+        </div>
+        <div class="w-full p-10 bg-white">
+
         </div>
     </div>
 </div>
@@ -18,112 +72,163 @@
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
- <script>
-    // Object to keep track of the current frame index and maximum number of frames
-    const frames = {
-        currentIndex: 0,
-        maxIndex: 538,
-    }
+    <script>
+        // Object to keep track of the current frame index and maximum number of frames
+        const frames = {
+            currentIndex: 0,
+            maxIndex: 538,
+        }
 
-    // Counter for how many images have been preloaded
-    let imagesLoaded = 0;
-    // Array to store all preloaded images
-    const images = [];
+        // Counter for how many images have been preloaded
+        let imagesLoaded = 0;
+        // Array to store all preloaded images
+        const images = [];
 
-    // Get the canvas element and its drawing context
-    const canvas = document.getElementById('frame');
-    const context = canvas.getContext('2d');
+        // Get the canvas element and its drawing context
+        const canvas = document.getElementById('frame');
+        const context = canvas.getContext('2d');
 
-    // Function to preload all frame images
-    function preloadImages() {
-        for (let i = 1; i <= frames.maxIndex; i++) {
-            // Build image file path with padded numbers (e.g., frame_0001.jpeg)
-            const imageUrl = `./frames/frame_${i.toString().padStart(4, '0')}.jpg`;
+        // Function to preload all frame images
+        function preloadImages() {
+            for (let i = 1; i <= frames.maxIndex; i++) {
+                // Build image file path with padded numbers (e.g., frame_0001.jpeg)
+                const imageUrl = `./frames/frame_${i.toString().padStart(4, '0')}.jpg`;
 
-            const img = new Image();
-            img.src = imageUrl;
+                const img = new Image();
+                img.src = imageUrl;
 
-            // When an image is loaded, increase counter
-            img.onload = () => {
-                imagesLoaded++;
+                // When an image is loaded, increase counter
+                img.onload = () => {
+                    imagesLoaded++;
 
-                // Once all images are loaded, display the first frame and start animation
-                if (imagesLoaded === frames.maxIndex) {
-                    console.log('All images preloaded');
-                    loadimage(frames.currentIndex);
-                    startAnimation();
+                    // Once all images are loaded, display the first frame and start animation
+                    if (imagesLoaded === frames.maxIndex) {
+                        console.log('All images preloaded');
+                        loadimage(frames.currentIndex);
+                        startAnimation();
+                    }
+                }
+                // Store the image in the array
+                images.push(img);
+            }
+        }
+
+        // Function to load and draw an image onto the canvas by index
+        function loadimage(index) {
+            if (index >= 0 && index <= frames.maxIndex) {
+                const img = images[index];
+
+                // Make the canvas cover the entire browser window
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                // Calculate scaling to fit the image proportionally into the canvas
+                const scaleX = canvas.width / img.width;
+                const scaleY = canvas.height / img.height;
+                const scale = Math.max(scaleX, scaleY);
+
+                // Calculate new dimensions after scaling
+                const newWidth = img.width * scale;
+                const newHeight = img.height * scale;
+
+                // Center the image on the canvas
+                const offsetX = (canvas.width - newWidth) / 2;
+                const offsetY = (canvas.height - newHeight) / 2;
+
+                // Clear the canvas and draw the new frame
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.imageSmoothingEnabled = true;
+                context.imageSmoothingQuality = 'high';
+                context.drawImage(img, offsetX, offsetY, newWidth, newHeight);
+
+                // Update the current frame index
+                frames.currentIndex = index;
+            }
+        }
+
+        // Function to start GSAP scroll-based animation
+        function startAnimation() {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".parent",   // Element that triggers the scroll animation
+                    start: "top top",     // Animation starts when top of .parent hits top of viewport
+                    scrub: 2,             // Smooth scrubbing, takes 2 seconds to catch up
+                    end: "bottom bottom", // Animation ends when bottom of .parent hits bottom of viewport
+                    // markers: true,        // Show markers for debugging
+                }
+            });
+
+            // Animate frame index from 0 to maxIndex while scrolling
+            // tl.to(frames, {
+            //     currentIndex: frames.maxIndex,
+            //     onUpdate: () => loadimage(Math.floor(frames.currentIndex)), // Update frame on each change
+            // });
+
+            let frames = { currentIndex: 0 };
+
+            function updateframe(index) {
+                return {
+                    currentIndex: index,
+                    ease: "linear", // or "none"
+                    onUpdate: () => loadimage(Math.floor(frames.currentIndex)),
                 }
             }
-            // Store the image in the array
-            images.push(img);
+
+            tl
+                .to(frames, updateframe(50), "first")
+                .to(".animate-1", { opacity: 0, y: -50, ease: "linear" }, "first")
+
+                .to(frames, updateframe(80), "second")
+                .to(".animate-2", { opacity: 1, ease: "linear" }, "second")
+
+                .to(frames, updateframe(110), "third")
+                .to(".animate-2", { opacity: 1, ease: "linear" }, "third")
+
+                .to(frames, updateframe(140), "fourth")
+                .to(".animate-2", { opacity: 0, ease: "linear" }, "fourth")
+
+                .to(frames, updateframe(170), "fifth")
+                .to(".animate-3", { opacity: 1, ease: "linear" }, "fifth")
+
+                .to(frames, updateframe(200), "sixth")
+                .to(".animate-3", { opacity: 1, ease: "linear" }, "sixth")
+
+                .to(frames, updateframe(230), "seventh")
+                .to(".animate-3", { opacity: 0, ease: "linear" }, "seventh")
+
+                .to(frames, updateframe(260), "eighth")
+                .to(".panel", { x: "0%", ease: "expo" }, "eighth")
+
+                .to(frames, updateframe(290), "ninth")
+                .to(".panel", { x: "0%", ease: "expo" }, "ninth")
+
+                .to(frames, updateframe(320), "tenth")
+                .to(".panel", { opacity: 0, ease: "expo" }, "tenth")
+
+                .to(frames, updateframe(350), "eleventh")
+                .to("canvas", { scale: .5, ease: "expo" }, "eleventh")
+
+                .to(frames, updateframe(380), "twelfth")
+                .to(".panelism", { opacity: 1, ease: "expo" }, "twelfth")
+
+                .to(frames, updateframe(410), "twelfth")
+                .to(".panelism span", { width: 200, ease: "expo" }, "twelfth")
+
+                .to(frames, updateframe(440), "thirteenth")
+                .to("canvas", { scale: 1, ease: "linear" }, "thirteenth")
+
+                .to(frames, updateframe(480), "fourteenth")
+                .to(".panelism", { scale: 2, ease: "circ" }, "fourteenth")
+
+                .to(frames, updateframe(538), "fifteenth")
+                .to(".panelism", { scale: 2, ease: "circ" }, "fifteenth")
+
+
         }
-    }
-
-    // Function to load and draw an image onto the canvas by index
-    function loadimage(index) {
-        if (index >= 0 && index <= frames.maxIndex) {
-            const img = images[index];
-
-            // Make the canvas cover the entire browser window
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            // Calculate scaling to fit the image proportionally into the canvas
-            const scaleX = canvas.width / img.width;
-            const scaleY = canvas.height / img.height;
-            const scale = Math.max(scaleX, scaleY);
-
-            // Calculate new dimensions after scaling
-            const newWidth = img.width * scale;
-            const newHeight = img.height * scale;
-
-            // Center the image on the canvas
-            const offsetX = (canvas.width - newWidth) / 2;
-            const offsetY = (canvas.height - newHeight) / 2;
-
-            // Clear the canvas and draw the new frame
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.imageSmoothingEnabled = true;
-            context.imageSmoothingQuality = 'high';
-            context.drawImage(img, offsetX, offsetY, newWidth, newHeight);
-
-            // Update the current frame index
-            frames.currentIndex = index;
-        }
-    }
-
-    // Function to start GSAP scroll-based animation
-    function startAnimation() {
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".parent",   // Element that triggers the scroll animation
-                start: "top top",     // Animation starts when top of .parent hits top of viewport
-                scrub: 2,             // Smooth scrubbing, takes 2 seconds to catch up
-                end: "bottom bottom", // Animation ends when bottom of .parent hits bottom of viewport
-                // markers: true,        // Show markers for debugging
-            }
-        });
-
-        // Animate frame index from 0 to maxIndex while scrolling
-        // tl.to(frames, {
-        //     currentIndex: frames.maxIndex,
-        //     onUpdate: () => loadimage(Math.floor(frames.currentIndex)), // Update frame on each change
-        // });
-        
-        function updateframe(index){
-            return{
-                currentIndex: index,
-                onUpdate: () => loadimage(Math.floor(frames.currentIndex)), 
-            }
-        }
-        tl
-        .to(frames,updateframe(537), "first")
-        
-    }
-    // Start preloading images when the script runs
-    preloadImages();
-    window.addEventListener('resize', () => loadimage(Math.floor(frames.currentIndex)));
-</script>
+        // Start preloading images when the script runs
+        preloadImages();
+        window.addEventListener('resize', () => loadimage(Math.floor(frames.currentIndex)));
+    </script>
 
 </body>
 
